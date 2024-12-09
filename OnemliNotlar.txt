@@ -1,0 +1,50 @@
+﻿                         --ArchitecturePatterns(Mimari Patternler)--
+        Architecture Patternler, bir projenin sistematik işleyişinden (calısmasını / kurulumunu saglayan temel mekanizmasından) sorumludur...Projenin tüm calısma mantıgı ve sistemsel işleyişi ile ilgilenen bir sablondur...Bozuldukları zaman proje cöker...
+
+        Design Patternler ise , kesinlikle projenin sistematik işleyişi ile ilgilenmez (Proje nasıl calısacak nerelere hangi assemblyler alınacak vs...) Proje icerisinden cıkarıldıgı zaman proje cökmez...Ancak performansını da ciddi ölcüde kaybeder...Projenin kurulumuna bir katkısı yoktur...Sadece mimari pattern ile uyum sagladıgı sürece ciddi ölcüde performansı arttırır...
+
+        --Yonetilebilirlik, ekip calısması ve performans acısından bütün sorumlulukları tek tek projere ayırdıgınız mimarilere Layered Architecture Patterns denir...Bunlardan N-Tier Architecture, Onion Architecture, Hybrid Architecture, Hexagonal Architecture en bilinenleridir...Layered Architecture Pattern bütün katmanların (projelerin) bagımsız olması prensibini uygulayarak ciddi ölcüde esneklik saglar...Tek bir projede hem veritabanı hem tasarım hem veritabanındaki tabloları temsil edecek class'ların tutulması bir hata durumunda esnekligi kısıtlayan, bir degişiklik durumunda adaptasyonu zorlayan ve ekip calısması durumunda senkron calısmayı oldukca karmasık hale getiren bir sistem yaratır...Ancak bütün görevler kendi sorumluluklarını uygulayan ayrı projelere verildigi zaman daha fazla esneklik kazanıp aynı zamanda hataya daha hızlı müdahale edilebilen bir ortam saglanır...Aynı zamanda ekip üyeleri de aynı anda farklı yerlerde calısabilirler...Ve performans acısından da sistemin daha hızlı calısması saglanacaktır...
+
+        Mimari Patternler ikiye ayrılır:
+        Layered Architecture Patterns
+        Modular Architecture Patterns(MVC,MVVM, MVM)
+
+        Katmanlı Mimari kullanmak icin aklınızdaki projeyi görev yapacak ayrı ayrı parcalara ayırmalısınız...Projenizin bütün halini bölerek yönetmeye calıstıgınız ve her projeye kendi görevlerini yazdıgınz bir katmanlı bir mimari modele uygulama işlemine gectiginizde siz Layered Architecture patternlerini ortaya cıkartırsınız...
+
+        N-Tİer Mimari profesyonel bir yapı  minimum 5 katmandan olusursa en saglıklı paterni sunar... İstendigi takdirde bagımsız olan bir katmanlı mimari (Code First veya benzeri manuel yapılardan bir katmanlı mimari) ihtiyaca göre ek katmanlar alarak kendisini genişletebilir. Lakin bu ek katmanların cok dikkatle acılması gerekir...Normalde tek bir catı altında durması gereken yapıları ayırmamalısınız...N-Tier mimari özgürlügünüzü kısıtlayan hazır yapılarda (ancak son care olarak DBFirst burada kullanılır) bile  3 katmanlı kullanılmaması gerekir. 3 katmanlı durumu kesinlikle tavsiye edilmez... 
+
+        3 katmanlı bir N-Tier Architecture Pattern'in katmanları (Tavsiye Edilmez):
+
+        DAL (Data Access Layer)
+        BLL (Business Logic Layer)
+        UI (User Interface)/ PL (Presentation Layer)
+
+
+        Katmanlı terimi proje demektir...N-Tier(Cok katmanlı)
+
+        1 => DAL(Data Access Layer) - Veri Erişim Katmanı : Solution'inizin sadece veritabanı baglantısı ile ilgilenecek olan katmanıdır.....DBFirst'te sadece veritabanı yansıması almayı saglarken sizi kısıtlayarak icerisine tablolarınızı temsil eden sınıflarınızı da alır(Halbuki saglıklı bir N-Tier mimarisinde bu sınıfların da ayrı bir projede(katmanda) bulunması gerekir)...Yani CodeFirst yönteminde bu katmanın sorumlulugu bu şekilde bogulmamalıdır... Yaratacagınız Context sınıfının DAL'da ayrı bir şekilde, diger sınıfların da ENTITIES isimli baska bir katmanda ayrı bir şekilde tutulması gerekir..Context sınıfınızın icerisinde yapılan ayarlamalar DBFirst'te bu katman tarafından belirlense de ayarlama aynı katman icerisinde ayrı bir klasorde tutularak ilgili Context sınıfında kullanılması en saglıklısı olur...CodeFirst yapısı kullanıyorsanız bu ayarlama işlemleri de MAP isimli ayrı bir katmanda yapılmalıdır...
+
+        2 => BLL(Business Logic Layer) - İş Mantığı Katman : EF(Add (_db.Categories.Add(), Update())) Eger bir Framework'un size sundugu yapıları özelleştirmek isterseniz veya ek olarak kendi metotlarınızı acmak isterseniz ve bu metotlar tüm her yerde kullanılacak metotlar olacaksa/ortak bir sınıf yaratmak isterseniz bunu yönetmek isterseniz bu katmanda toplarsınız... Aynı zamanda BLL katmanı N-Tier mimari paterninde tasarım patternlerinizin (design patterns) büyük bir cogunlugunun barındırılacagı yerdir...
+
+        3 => Presentation (UI- User Interface) Layer : sunum katmanı : Tasarım arayüzünüzdür...Kullanıcı bunu görür bunu kullanır. Burası sayesinde program calısır ve kullanılabilir...
+        --------------------------------------------------------------
+        Katmanlı Mimarilerde Önemli Kurallar vardır:
+
+        1 => Bir mimaride birden fazla Presentation Layer bulunabilir (Form,Web,Mobile,API)...Ancak DAL,BLL,Map,ENtities katmanları bir tane olabilir...
+
+        2 => Eger bir katman (proje) baska bir katmanı referans alıyorsa oraya referans veremez...Circular dependency y aratmıs olursunuz...Ortak yapılar icin billa belirli sınıflar kullanılacak ise baska bir ara katman acılır..
+
+        .Net Framework üzerinde yaratılan mimarilerde gecerlidir: 
+
+        Eger bir katmandan referans almıssanız , bu durum o katmanın aldıgı kendi referanslarını da alacagınız anlamına gelmez...Onları ayrı bir şekilde referans almalısınız
+
+        ----------------------------------------
+
+        CONF =>  Bizim veritabanı ayarlamalarını yapacagımız katmandır
+
+        ENTITIES => Sizin veritabanınızda tablolarınızı temsil edecek class'larinizin bulundugu katmandır...
+
+
+
+
+
