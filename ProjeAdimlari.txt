@@ -6,3 +6,23 @@ N-Tier
 
 -----ENTITIES Katmanı----
 *Veritabanında tabloya dönüsecek olan sınıflarımızı ve enum'larımızı, varsa bunlarla ilgili Interface'leri icerecek olan katmandır...Ve varsa Domain Entity'lerimize miras verecek olan sınıfları tutar...
+
+
+
+------CONF Katmanına geciyoruz-----
+Veritabanı ayarlamalarınızı hazır bulundurup DAL'a gönderecek katmandır...
+Bu katmanda öncelikle EntityFramework kütüphanesi indirilir...Sonra da referanslarına Project.ENTITIES katmanı eklenir... Sonra BaseConfiguration sınıfınızı acar ve icerigini yazarsınız... Sonra Configuration sınıflarımıza devam ederiz...
+
+
+
+------DAL Katmanına geciyoruz-----
+
+EF kütüphanemizi ilk basta indiriyoruz...Sonra kısa bir süre icin UI katmanımıza gecip oraya da EntityFramework indirip app.config tarafına baglantı ayarlarımızı tanımlıyoruz... Sonra DAL'a geri dönüyoruz..
+
+DAL katmanımız CONF katmanından referans almalıdır...Cünkü oradaki, veritabanı ayarlamalarını yapan sınıfları kullanmak istiyordur... Aynı zamanda ENTITIES katmanını da referans alıyoruz cünkü o sınıfları da kullanmak istiyoruz...
+
+Veritabanımız saglıklı bir şekilde ayaga kalkıyor mu diye test ediyoruz...
+
+--------BLL Katmanına geciyoruz----------
+
+Öncelikle BLL katmanına EntityFramework indiriyoruz...Sonra DAL katmanından referans alıyoruz...
