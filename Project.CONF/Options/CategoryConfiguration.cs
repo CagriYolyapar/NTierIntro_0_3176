@@ -14,6 +14,7 @@ namespace Project.CONF.Options
             Property(x => x.CategoryName).HasColumnName("Kategori İsmi");
             ToTable("Kategoriler");
             Property(x => x.Description).HasColumnName("Acıklama");
+
         }
     }
 }

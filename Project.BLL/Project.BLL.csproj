@@ -52,7 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesignPatterns\GenericRepository\EFBaseRep\BaseRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\AppUserRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\EFConcRep\CategoryRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\OrderDetailRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\OrderRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ProductRepository.cs" />
+    <Compile Include="DesignPatterns\GenericRepository\EFConcRep\ProfileRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\IntRep\IRepository.cs" />
     <Compile Include="DesignPatterns\GenericRepository\MongoBaseRep\BaseRepository.cs" />
     <Compile Include="DesignPatterns\SingletonPattern\DBTool.cs" />

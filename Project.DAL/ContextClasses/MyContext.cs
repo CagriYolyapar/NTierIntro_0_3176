@@ -13,7 +13,7 @@ namespace Project.DAL.ContextClasses
     {
         public MyContext() : base("MyConnection")
         {
-
+         
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

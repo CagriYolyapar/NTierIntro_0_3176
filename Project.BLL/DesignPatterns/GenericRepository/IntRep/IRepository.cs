@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,13 @@ namespace Project.BLL.DesignPatterns.GenericRepository.IntRep
         /// Bu metot veriyi yok eder
         /// </summary>
         /// <param name="item"></param>
-        string Destroy(T item); 
+        string Destroy(T item);
+
+        List<T> Where(Expression<Func<T,bool>> exp);
+        bool Any(Expression<Func<T, bool>> exp);
+
+        List<T> GetActives();
+        List<T> GetPassives();
+        List<T> GetModifieds();
     }
 }

@@ -13,7 +13,9 @@ namespace Project.CONF.Options
         {
             ToTable("Siparisler");
             Property(x => x.ShippingAddress).HasColumnName("Gonderim Adresi");
-          
+
+
+
         }
     }
 }
